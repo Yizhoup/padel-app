@@ -1,0 +1,44 @@
+<resources>
+    <string name="app_name">Padel</string>
+
+    <string name="my_matches_title">Mis Partidos</string>
+    <string name="my_matches_subtitle">Seguimiento de tu actividad de pádel</string>
+    <string name="tab_upcoming_count">Próximos (%1$d)</string>
+    <string name="tab_completed_count">Completados (%1$d)</string>
+    <string name="stat_matches">Partidos</string>
+    <string name="stat_rating">Valoración</string>
+    <string name="stat_level">Nivel</string>
+
+    <string name="empty_upcoming_title">No hay partidos próximos</string>
+    <string name="empty_upcoming_body">¡Únete a un partido para comenzar!</string>
+    <string name="empty_completed_title">Aún no hay partidos completados</string>
+    <string name="empty_completed_body">Tu historial de partidos aparecerá aquí</string>
+
+    <string name="match_unknown_court">Pista desconocida</string>
+    <string name="match_time_duration">%1$s (%2$d min)</string>
+    <string name="match_players_count">%1$d / %2$d jugadores</string>
+    <string name="match_join">Unirse al Partido</string>
+    <string name="match_full">Completo</string>
+    <string name="match_completed_badge">Finalizado</string>
+
+    <string name="level_principiante">Principiante</string>
+    <string name="level_intermedio">Intermedio</string>
+    <string name="level_avanzado">Avanzado</string>
+    <string name="level_profesional">Profesional</string>
+    <string name="level_todos">Todos los niveles</string>
+
+    <string name="nav_home">Inicio</string>
+    <string name="nav_courts">Pistas</string>
+    <string name="nav_my_matches">Mis partidos</string>
+    <string name="nav_profile">Perfil</string>
+    <string name="fab_create_match">Crear partido</string>
+    <string name="toast_join_match">Unirse al partido: %1$s</string>
+
+    <string name="placeholder_home_body">Descubre partidos y novedades cerca de ti (próximamente).</string>
+    <string name="placeholder_courts_body">Explora pistas disponibles para reservar (próximamente).</string>
+    <string name="placeholder_profile_body">Cuenta y ajustes (próximamente).</string>
+    <string name="screen_create_match">Crear partido</string>
+    <string name="placeholder_create_match_body">Aquí irá el formulario y el envío al backend.</string>
+    <string name="screen_match_detail">Detalle del partido</string>
+    <string name="placeholder_match_detail_id">ID del partido: %1$s\nConecta con GET /matches/{id} para el detalle completo.</string>
+</resources>

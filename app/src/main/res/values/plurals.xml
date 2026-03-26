@@ -1,0 +1,6 @@
+<resources>
+    <plurals name="match_spots_left">
+        <item quantity="one">%d plaza libre</item>
+        <item quantity="other">%d plazas libres</item>
+    </plurals>
+</resources>
