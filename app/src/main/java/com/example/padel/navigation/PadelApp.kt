@@ -1,15 +1,12 @@
 package com.example.padel.navigation
 
-import android.widget.Toast
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.CalendarMonth
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Place
-import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material.icons.outlined.AddCircle
+import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material.icons.outlined.List
+import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -19,7 +16,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavType
@@ -29,9 +25,9 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.padel.R
-import com.example.padel.data.MatchRepository
 import com.example.padel.screens.LoginScreen
-import com.example.padel.ui.courts.CourtsScreen
+import com.example.padel.screens.RegisterScreen
+import com.example.padel.session.SessionManager
 import com.example.padel.ui.home.HomeScreen
 import com.example.padel.ui.match.CreateMatchScreen
 import com.example.padel.ui.match.MatchDetailScreen
@@ -45,37 +41,31 @@ private data class BottomTab(
 )
 
 @Composable
-fun PadelApp(repository: MatchRepository) {
+fun PadelApp() {
     val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
-    val context = LocalContext.current
 
-    val showBottomBarAndFab = currentRoute != null &&
-            currentRoute != PadelDestinations.LOGIN &&
-            currentRoute != PadelDestinations.CREATE_MATCH &&
-            !currentRoute.startsWith("match/")
+    val showBottomBar = currentRoute != null &&
+        currentRoute != PadelDestinations.LOGIN &&
+        currentRoute != PadelDestinations.REGISTER &&
+        !currentRoute.startsWith("match/")
 
     val tabs = listOf(
-        BottomTab(PadelDestinations.HOME, R.string.nav_home, Icons.Default.Home),
-        BottomTab(PadelDestinations.COURTS, R.string.nav_courts, Icons.Default.Place),
-        BottomTab(PadelDestinations.MY_MATCHES, R.string.nav_my_matches, Icons.Default.CalendarMonth),
-        BottomTab(PadelDestinations.PROFILE, R.string.nav_profile, Icons.Default.Person),
+        BottomTab(PadelDestinations.HOME, R.string.nav_home, Icons.Outlined.Home),
+        BottomTab(PadelDestinations.MY_MATCHES, R.string.nav_matches, Icons.Outlined.List),
+        BottomTab(PadelDestinations.CREATE_MATCH, R.string.nav_create, Icons.Outlined.AddCircle),
+        BottomTab(PadelDestinations.PROFILE, R.string.nav_profile, Icons.Outlined.Person),
     )
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         bottomBar = {
-            if (showBottomBarAndFab) {
+            if (showBottomBar) {
                 NavigationBar {
                     tabs.forEach { tab ->
                         NavigationBarItem(
-                            icon = {
-                                Icon(
-                                    tab.icon,
-                                    contentDescription = stringResource(tab.labelRes),
-                                )
-                            },
+                            icon = { Icon(tab.icon, contentDescription = stringResource(tab.labelRes)) },
                             label = { Text(stringResource(tab.labelRes)) },
                             selected = currentRoute == tab.route,
                             onClick = {
@@ -89,18 +79,6 @@ fun PadelApp(repository: MatchRepository) {
                             },
                         )
                     }
-                }
-            }
-        },
-        floatingActionButton = {
-            if (showBottomBarAndFab) {
-                FloatingActionButton(
-                    onClick = { navController.navigate(PadelDestinations.CREATE_MATCH) },
-                ) {
-                    Icon(
-                        Icons.Default.Add,
-                        contentDescription = stringResource(R.string.fab_create_match),
-                    )
                 }
             }
         },
@@ -120,31 +98,37 @@ fun PadelApp(repository: MatchRepository) {
                             launchSingleTop = true
                         }
                     },
+                    onOpenRegister = {
+                        navController.navigate(PadelDestinations.REGISTER)
+                    },
+                )
+            }
+
+            composable(PadelDestinations.REGISTER) {
+                RegisterScreen(
+                    onRegisterSuccess = { email ->
+                        SessionManager.prefilledEmail = email
+                        navController.popBackStack()
+                    },
+                    onBackToLogin = {
+                        navController.popBackStack()
+                    },
                 )
             }
 
             composable(PadelDestinations.HOME) {
-                HomeScreen(Modifier.fillMaxSize())
-            }
-
-            composable(PadelDestinations.COURTS) {
-                CourtsScreen(Modifier.fillMaxSize())
+                HomeScreen(
+                    modifier = Modifier.fillMaxSize(),
+                    onJoinMatch = { id -> navController.navigate(PadelDestinations.matchDetail(id)) },
+                    onOpenMatchDetail = { id -> navController.navigate(PadelDestinations.matchDetail(id)) },
+                )
             }
 
             composable(PadelDestinations.MY_MATCHES) {
                 MyMatchesScreen(
-
                     modifier = Modifier.fillMaxSize(),
-                    onJoinMatch = { id ->
-                        Toast.makeText(
-                            context,
-                            context.getString(R.string.toast_join_match, id),
-                            Toast.LENGTH_SHORT,
-                        ).show()
-                    },
-                    onOpenMatchDetail = { id ->
-                        navController.navigate(PadelDestinations.matchDetail(id))
-                    },
+                    onJoinMatch = { id -> navController.navigate(PadelDestinations.matchDetail(id)) },
+                    onOpenMatchDetail = { id -> navController.navigate(PadelDestinations.matchDetail(id)) },
                 )
             }
 
@@ -154,16 +138,14 @@ fun PadelApp(repository: MatchRepository) {
 
             composable(PadelDestinations.CREATE_MATCH) {
                 CreateMatchScreen(
-                    onBack = { navController.popBackStack() },
+                    onBack = { navController.navigate(PadelDestinations.HOME) },
                     modifier = Modifier.fillMaxSize(),
                 )
             }
 
             composable(
                 route = PadelDestinations.MATCH_DETAIL,
-                arguments = listOf(
-                    navArgument("matchId") { type = NavType.StringType },
-                ),
+                arguments = listOf(navArgument("matchId") { type = NavType.StringType }),
             ) { entry ->
                 val matchId = entry.arguments?.getString("matchId").orEmpty()
                 MatchDetailScreen(

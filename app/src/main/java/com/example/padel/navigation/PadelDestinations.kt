@@ -2,8 +2,8 @@ package com.example.padel.navigation
 
 object PadelDestinations {
     const val LOGIN = "login"
+    const val REGISTER = "register"
     const val HOME = "home"
-    const val COURTS = "courts"
     const val MY_MATCHES = "my_matches"
     const val PROFILE = "profile"
     const val CREATE_MATCH = "create_match"

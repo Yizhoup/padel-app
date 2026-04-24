@@ -1,8 +1,11 @@
 package com.example.padel.model
 
 data class MatchCreate(
-    val is_1v1: Boolean,
-    val is_private: Boolean,
-    val host_id: Int? = null,
-    val programmed_date: String
+    val fecha: String,
+    val hora: String,
+    val ubicacion: String,
+    val nivel_requerido: String? = null,
+    val plazas_totales: Int = 4,
+    val descripcion: String? = null,
+    val creador_id: Int,
 )
