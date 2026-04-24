@@ -6,16 +6,13 @@ import com.example.padel.data.model.MatchStatus
 import com.example.padel.data.model.PadelLevel
 import com.example.padel.data.model.Player
 
-/**
- * 与 Figma Make mockData 同步的示例数据，便于联调与 UI 预览。
- */
 object PadelSampleData {
 
     val players: List<Player> = listOf(
-        Player("1", "Carlos Rodríguez", null, PadelLevel.AVANZADO, 4.5, 45),
-        Player("2", "María García", null, PadelLevel.INTERMEDIO, 3.8, 32),
-        Player("3", "Juan Martínez", null, PadelLevel.PROFESIONAL, 4.9, 120),
-        Player("4", "Sofía López", null, PadelLevel.PRINCIPIANTE, 2.5, 8),
+        Player("1", "Carlos Rodriguez", null, PadelLevel.AVANZADO, 4.5, 45),
+        Player("2", "Maria Garcia", null, PadelLevel.INTERMEDIO, 3.8, 32),
+        Player("3", "Juan Martinez", null, PadelLevel.PROFESIONAL, 4.9, 120),
+        Player("4", "Sofia Lopez", null, PadelLevel.PRINCIPIANTE, 2.5, 8),
     )
 
     val courts: List<Court> = listOf(
@@ -26,7 +23,7 @@ object PadelSampleData {
             imageUrl = "https://images.unsplash.com/photo-1658491830143-72808ca237e3",
             pricePerHour = 35,
             indoor = true,
-            amenities = listOf("Aparcamiento", "Vestuarios", "Tienda", "Cafetería"),
+            amenities = listOf("Aparcamiento", "Vestuarios", "Tienda", "Cafeteria"),
             rating = 4.8,
             availability = true,
         ),
@@ -55,7 +52,7 @@ object PadelSampleData {
         Court(
             id = "4",
             name = "Complejo Deportivo Sevilla",
-            address = "Plaza de España 101, Sevilla",
+            address = "Plaza de Espana 101, Sevilla",
             imageUrl = "https://images.unsplash.com/photo-1709587823868-735f9375ae74",
             pricePerHour = 28,
             indoor = false,
@@ -67,7 +64,7 @@ object PadelSampleData {
 
     val currentUser: Player = Player(
         id = "current-user",
-        name = "Tú",
+        name = "Tu",
         null,
         PadelLevel.INTERMEDIO,
         3.5,
@@ -85,7 +82,7 @@ object PadelSampleData {
             currentPlayers = listOf(currentUser, players[1]),
             maxPlayers = 4,
             status = MatchStatus.OPEN,
-            description = "¡Buscamos 2 jugadores más para un partido divertido!",
+            description = "Buscamos 2 jugadores mas para un partido divertido!",
             organizer = currentUser,
         ),
         Match(
@@ -137,7 +134,7 @@ object PadelSampleData {
             currentPlayers = listOf(players[2], players[0], players[1], currentUser),
             maxPlayers = 4,
             status = MatchStatus.FULL,
-            description = "Sesión de práctica para torneo",
+            description = "Sesion de practica para torneo",
             organizer = players[2],
         ),
         Match(

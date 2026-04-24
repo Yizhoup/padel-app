@@ -1,10 +1,5 @@
 package com.example.padel.data.model
 
-/**
- * 与 Figma Make / 典型 REST JSON 对齐的字段（camelCase 便于日后接 Moshi/Gson）。
- * status: "open" | "full" | "completed"
- * level 文案与原型一致（西语），展示层可再映射为中文。
- */
 enum class MatchStatus(val wireValue: String) {
     OPEN("open"),
     FULL("full"),
@@ -53,9 +48,7 @@ data class Court(
 data class Match(
     val id: String,
     val courtId: String,
-    /** ISO-8601 日期 yyyy-MM-dd */
     val date: String,
-    /** 如 18:00 */
     val time: String,
     val durationMinutes: Int,
     val level: PadelLevel,

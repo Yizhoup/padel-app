@@ -4,13 +4,9 @@ import com.example.padel.data.model.Court
 import com.example.padel.data.model.Match
 import com.example.padel.data.model.Player
 
-/**
- * 与后端 `/matches` 等资源对接时，在此实现网络数据源并保留相同返回结构。
- */
 interface MatchRepository {
     fun getCourts(): List<Court>
     fun getCurrentUser(): Player
-    /** 当前用户相关的比赛（组织者或已在 currentPlayers 中） */
     fun getMyMatches(): List<Match>
 }
 
